@@ -3,7 +3,8 @@ import Vue from 'vue';
 
 export default {
 	state: {
-		status: false
+		status: false,
+		user: {}
 	},
 	actions: {
 		async login( {state}, input ) {
@@ -16,7 +17,9 @@ export default {
 			let res = feathers.authenticate(data);
 
 			res
-				.then(() => {
+				.then((r) => {
+					console.log(r.user);
+					Vue.set(state, 'user', r.user);
 					Vue.set(state, 'status', true);
 				})
 				.catch(err => err);
@@ -27,6 +30,7 @@ export default {
 			feathers.logout()
 				.then(() => {
 					Vue.set(state, 'status', false);
+					Vue.set(state, 'user', {});
 				})
 				.catch(err => err);
 		},
@@ -45,7 +49,8 @@ export default {
 					};
 					
 					feathers.authenticate(data)
-						.then(() => {
+						.then((r) => {
+							Vue.set(state, 'user', r.user);
 							Vue.set(state, 'status', true);
 						})
 						.catch(err => console.log(err));
@@ -61,7 +66,8 @@ export default {
 			if(state.status === false) {
 
 				await feathers.reAuthenticate()
-					.then(() => {
+					.then((r) => {
+						Vue.set(state, 'user', r.user);
 						Vue.set(state, 'status', true);
 					})
 					.catch(err => {
@@ -70,6 +76,18 @@ export default {
 					});
 
 			}
+		},
+		async updatePassword( _, data) {
+			const input = {
+				password: data.password
+			};
+
+			let res = feathers.service('users').patch(data.id, input);
+
+			res.then(r => console.log(r))
+				.catch(err => console.log(err));
+
+			return res;
 		}
 	}
 };

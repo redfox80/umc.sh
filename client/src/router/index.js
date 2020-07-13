@@ -37,6 +37,11 @@ const routes = [
 		meta: {
 			allowAnonymous: true
 		}
+	},
+	{
+		path: '/account',
+		name: 'Account',
+		component: () => import('../views/Account')
 	}
 ];
 

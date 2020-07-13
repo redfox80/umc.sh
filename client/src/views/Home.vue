@@ -5,23 +5,22 @@
 
 			<div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-md-3 col-xl-4 offset-xl-4">
 
-				<p>
-					UMC link shortener, Lorem eirmod diam eirmod ipsum est labore gubergren rebum, takimata kasd gubergren clita gubergren erat diam et sed, clita rebum.
-				</p>
-
 				<b-form @submit="createLink">
 
 					<b-form-group
 						label="Link to shorten"
 						label-for="link"
+						description="A url must start with http:// or https://"
 					>
 						<b-form-input
 							id="link"
 							v-model="link"
 							type="text"
 							:state="(linkErr) ? false:null"
+							autocomplete="off"
+							autofocus
 						></b-form-input>
-						<b-form-invalid-feedback>Link is required and must be valid url</b-form-invalid-feedback>
+						<b-form-invalid-feedback>Invalid url</b-form-invalid-feedback>
 					</b-form-group>
 
 					<b-button variant="primary" type="submit">Generate link</b-button>
@@ -30,7 +29,10 @@
 
 				<b-card v-show="showSlink" class="mt-3 text-center" bg-variant="light" header="Generated link">
 					<b-card-text>
-						Erat ipsum et ipsum dolore aliquyam invidunt. Et justo ut.
+						<p>
+							{{ link }} turned into
+						</p>
+						<a :href="slink">{{ slink }}</a>
 					</b-card-text>
 				</b-card>
 				
@@ -59,10 +61,8 @@ export default {
 	components: {
 	},
 	methods: {
-		createLink(e) {
+		async createLink(e) {
 			e.preventDefault();
-
-			console.log('moaefmopaefmop');
 
 			Vue.set(this, 'linkErr', false);
 			let err = false;
@@ -74,7 +74,18 @@ export default {
 
 			if(err) return;
 
-			Vue.set(this, 'showSlink', !this.showSlink);
+			const input = {
+				link: this.link
+			};
+
+			this.$store.dispatch('postLink', input)
+				.then( r => {
+					console.log(r);
+					Vue.set(this, 'slink', `https://umc.sh/${r.short}`);
+					Vue.set(this, 'showSlink', !this.showSlink);
+				});
+
+
 		}
 	},
 	validations: {

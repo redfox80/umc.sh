@@ -18,9 +18,12 @@ const channels = require('./channels');
 
 const authentication = require('./authentication');
 
+const redirect = require('./redirect');
+
 const sequelize = require('./sequelize');
 
 const app = express(feathers());
+
 
 // Load app configuration
 app.configure(configuration());
@@ -39,6 +42,7 @@ app.configure(express.rest());
 app.configure(socketio());
 
 app.configure(sequelize);
+app.configure(redirect);
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
@@ -54,4 +58,6 @@ app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
 
-module.exports = app;
+module.exports = {
+	app
+};
