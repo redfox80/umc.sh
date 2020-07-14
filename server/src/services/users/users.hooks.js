@@ -7,18 +7,45 @@ const {
 
 module.exports = {
 	before: {
-		all: [
+		all: [],
+		find: [ 
+			authenticate('jwt'), 
 			setField({
 				from: 'params.user.id',
 				as: 'params.query.id'
 			})
 		],
-		find: [ authenticate('jwt') ],
-		get: [ authenticate('jwt') ],
+		get: [ 
+			authenticate('jwt'),
+			setField({
+				from: 'params.user.id',
+				as: 'params.query.id'
+			})
+		],
 		create: [ hashPassword('password') ],
-		update: [ hashPassword('password'),  authenticate('jwt') ],
-		patch: [ hashPassword('password'),  authenticate('jwt') ],
-		remove: [ authenticate('jwt') ]
+		update: [
+			hashPassword('password'),
+			authenticate('jwt'),
+			setField({
+				from: 'params.user.id',
+				as: 'params.query.id'
+			})
+		],
+		patch: [
+			hashPassword('password'),
+			authenticate('jwt'),
+			setField({
+				from: 'params.user.id',
+				as: 'params.query.id'
+			})
+		],
+		remove: [
+			authenticate('jwt'),
+			setField({
+				from: 'params.user.id',
+				as: 'params.query.id'
+			})
+		]
 	},
 
 	after: {

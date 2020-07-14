@@ -3,8 +3,9 @@ import feathers from '@feathersjs/feathers';
 import socketio from '@feathersjs/socketio-client';
 import auth from '@feathersjs/authentication-client';
 
-const socket = io('https://umc.sh:3030', {
+const socket = io('http://localhost:3030/', {
 	transports: ['websocket'],
+	upgrade: false
 });
 const client = feathers();
 client.configure(socketio(socket));
