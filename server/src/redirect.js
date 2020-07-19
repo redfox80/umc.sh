@@ -19,6 +19,8 @@ function mw(sc) {
 						next();
 						return;
 					} else {
+						r.clicks = r.clicks+1;
+						r.save();
 						res.redirect(301, r.link);
 					}
 				})

@@ -21,7 +21,9 @@ export default {
 		},
 		async removeLink( _, id) {
 			feathers.service('link').remove(id)
-				.then(r => console.log(r));
+				.then(() => {
+					this.dispatch('getLinks');
+				});
 		}
 	}
 };

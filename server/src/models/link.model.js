@@ -17,6 +17,10 @@ module.exports = function (app) {
 		createdBy: {
 			type: DataTypes.INTEGER,
 			defaultValue: 0
+		},
+		clicks: {
+			type: DataTypes.INTEGER,
+			defaultValue: 0
 		}
 	}, {
 		hooks: {

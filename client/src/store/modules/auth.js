@@ -18,7 +18,6 @@ export default {
 
 			res
 				.then((r) => {
-					console.log(r.user);
 					Vue.set(state, 'user', r.user);
 					Vue.set(state, 'status', true);
 				})
@@ -40,7 +39,6 @@ export default {
 
 			res
 				.then(() => {
-					// console.log('Store', r);
 
 					const data = {
 						strategy: 'local',
@@ -54,7 +52,6 @@ export default {
 							Vue.set(state, 'status', true);
 						})
 						.catch(err => console.log(err));
-					// Vue.set(state, 'status', true);
 				})
 				.catch(err => err);
 
@@ -83,9 +80,6 @@ export default {
 			};
 
 			let res = feathers.service('users').patch(data.id, input);
-
-			res.then(r => console.log(r))
-				.catch(err => console.log(err));
 
 			return res;
 		}

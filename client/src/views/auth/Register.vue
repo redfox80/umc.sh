@@ -65,7 +65,7 @@ export default {
 		};
 	},
 	mounted() {
-		if(this.$store.state.auth.status === true) this.$router.push('/home');
+		if(this.$store.state.auth.status === true) this.$router.push('/');
 	},
 	methods: {
 		async register(e) {
@@ -99,7 +99,7 @@ export default {
 
 			this.$store.dispatch('register', input)
 				.then(() => {
-					this.$router.push('/home');
+					this.$router.push('/');
 				})
 				.catch(err => {
 					for(let i = 0; i < err.errors.length; i++) {

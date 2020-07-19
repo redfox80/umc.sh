@@ -56,7 +56,7 @@ export default {
 		};
 	},
 	mounted() {
-		if(this.$store.state.auth.status === true) this.$router.push('/home');
+		if(this.$store.state.auth.status === true) this.$router.push('/');
 	},
 	methods: {
 		async login(e) {
@@ -87,7 +87,7 @@ export default {
 
 			res
 				.then(() => {
-					this.$router.push(this.$route.query.redirect || '/home');
+					this.$router.push(this.$route.query.redirect || '/');
 				})
 				.catch(err => {
 					this.errors.push(err.message);

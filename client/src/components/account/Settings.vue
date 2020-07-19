@@ -40,7 +40,7 @@
 
 			<button type="submit" class="btn btn-success" @click="updatePassword">Update password</button>
 
-			<b-icon-check2-circle scale="2" class="text-success" v-show="passwordSuccess"></b-icon-check2-circle>
+			<b-icon-check2-circle scale="2" class="text-success ml-3" v-show="passwordSuccess"></b-icon-check2-circle>
 			<span v-show="passwordFail" class="text-danger ml-3">
 				<b-icon-x-circle scale="2" class="ml-3"></b-icon-x-circle>
 				<b class="ml-3">Something went wrong on the server when attempting to update password</b>
@@ -97,6 +97,8 @@ export default {
 
 			this.$store.dispatch('updatePassword', data)
 				.then(() => {
+					Vue.set(this, 'password', null);
+					Vue.set(this, 'passwordConfirm', null);
 					Vue.set(this, 'passwordFail', false);
 					Vue.set(this, 'passwordSuccess', true);
 					setTimeout(() => {
@@ -104,6 +106,8 @@ export default {
 					}, 2500);
 				})
 				.catch(() => {
+					Vue.set(this, 'password', null);
+					Vue.set(this, 'passwordConfirm', null);
 					Vue.set(this, 'passwordSuccess', false);
 					Vue.set(this, 'passwordFail', true);
 				});

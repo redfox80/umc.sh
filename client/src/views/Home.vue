@@ -14,25 +14,31 @@
 					>
 						<b-form-input
 							id="link"
+							ref="link"
 							v-model="link"
 							type="text"
 							:state="(linkErr) ? false:null"
 							autocomplete="off"
 							autofocus
+							:disabled="(done) ? true:false"
 						></b-form-input>
 						<b-form-invalid-feedback>Invalid url</b-form-invalid-feedback>
 					</b-form-group>
 
-					<b-button variant="primary" type="submit">Generate link</b-button>
+					<b-button variant="primary" type="submit" v-show="!done">Generate link</b-button>
+					<b-button variant="primary" type="button" v-show="done" @click="newLink">New link</b-button>
 					
 				</b-form>
 
 				<b-card v-show="showSlink" class="mt-3 text-center" bg-variant="light" header="Generated link">
 					<b-card-text>
 						<p>
-							{{ link }} turned into
+							{{ link }}
 						</p>
-						<a :href="slink">{{ slink }}</a>
+						<a :href="slink">{{ slinks }}</a>
+
+						<b-icon-files class="ml-4 text-primary cursor-pointer" scale="1.2" v-b-tooltip.hover title="Copy" style="cursor: pointer;" @click="copy"></b-icon-files>
+						<b-icon-check-circle class="ml-4 text-success" scale="2" v-show="copied"></b-icon-check-circle>
 					</b-card-text>
 				</b-card>
 				
@@ -55,7 +61,10 @@ export default {
 			link: null,
 			linkErr: false,
 			slink: null,
-			showSlink: false
+			slinks: null,
+			showSlink: false,
+			copied: false,
+			done: false
 		};
 	},
 	components: {
@@ -80,12 +89,33 @@ export default {
 
 			this.$store.dispatch('postLink', input)
 				.then( r => {
-					console.log(r);
 					Vue.set(this, 'slink', `https://umc.sh/${r.short}`);
-					Vue.set(this, 'showSlink', !this.showSlink);
+					Vue.set(this, 'slinks', `umc.sh/${r.short}`);
+					Vue.set(this, 'showSlink', true);
+					Vue.set(this, 'done', true);
 				});
-
-
+		},
+		newLink() {
+			Vue.set(this, 'link', null);
+			Vue.set(this, 'slink', null);
+			Vue.set(this, 'slinks', null);
+			Vue.set(this, 'showSlink', false);
+			Vue.set(this, 'done', false);
+			setTimeout(() => { //WAT !?!?!?!? doesn't work without zero delay :$
+				document.querySelector('#link').focus();
+			}, 0);
+		},
+		copy() {
+			const el = document.createElement('textarea');
+			el.value = this.slink;
+			document.body.appendChild(el);
+			el.select();
+			document.execCommand('copy');
+			document.body.removeChild(el);
+			Vue.set(this, 'copied', true);
+			setTimeout(() => {
+				Vue.set(this, 'copied', false);
+			}, 2500);
 		}
 	},
 	validations: {
