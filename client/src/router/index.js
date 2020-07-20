@@ -23,6 +23,30 @@ const routes = [
 		}
 	},
 	{
+		path: '/contact',
+		name: 'Contact',
+		component: () => import('../views/Contact.vue'),
+		meta: {
+			allowAnonymous: true
+		}
+	},
+	{
+		path: '/privacy',
+		name: 'Privacy',
+		component: () => import('../views/legal/Privacy.vue'),
+		meta: {
+			allowAnonymous: true
+		}
+	},
+	{
+		path: '/terms',
+		name: 'Terms and Conditions',
+		component: () => import('../views/legal/TOS.vue'),
+		meta: {
+			allowAnonymous: true
+		}
+	},
+	{
 		path: '/login',
 		name: 'Login',
 		component: () => import('../views/auth/Login.vue'),
@@ -42,6 +66,14 @@ const routes = [
 		path: '/account',
 		name: 'Account',
 		component: () => import('../views/Account')
+	},
+	{
+		path: '*',
+		name: '404',
+		component: () => import('../views/404.vue'),
+		meta: {
+			allowAnonymous: true
+		}
 	}
 ];
 

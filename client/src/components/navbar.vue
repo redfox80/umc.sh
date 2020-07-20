@@ -7,6 +7,9 @@
 		<b-collapse id="nav-collapse" is-nav>
 			<b-navbar-nav>
 				<b-nav-item to="/" active-class="active" exact>Home</b-nav-item>
+				<b-nav-item to="/contact" active-class="active" exact>Contact</b-nav-item>
+				<b-nav-item to="/privacy" active-class="active" exact>Privacy</b-nav-item>
+				<b-nav-item to="/terms" active-class="active" exact>Terms & Conditions</b-nav-item>
 				<!-- <b-nav-item to="/about" active-class="active" exact>About</b-nav-item> -->
 			</b-navbar-nav>
 

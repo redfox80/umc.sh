@@ -19,3 +19,11 @@ new Vue({
 	router,
 	render: h => h(App)
 }).$mount('#app');
+
+let dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
+if(process.env.NODE_ENV == 'production') {
+	gtag('js', new Date());
+	gtag('config', 'UA-173033541-1');
+}
