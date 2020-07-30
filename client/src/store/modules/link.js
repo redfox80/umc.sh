@@ -33,6 +33,7 @@ export default {
 			feathers.service('link').remove(id)
 				.then(() => {
 					this.dispatch('getLinks');
+					this.dispatch('getLinksAdmin');
 				});
 		}
 	}
