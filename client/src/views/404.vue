@@ -15,7 +15,7 @@
 
 						<p>
 							There is no content here.<br/>
-							If you believe this is a mistake you can <RouterLink to="/">contact us</RouterLink>
+							If you believe this is a mistake you can <RouterLink to="/contact">contact us</RouterLink>
 						</p>
 
 						<p class="mt-5">

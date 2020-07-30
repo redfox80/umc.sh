@@ -68,6 +68,14 @@ const routes = [
 		component: () => import('../views/Account')
 	},
 	{
+		path: '/admin',
+		name: 'Admin',
+		component: () => import('../views/admin/Dashboard.vue'),
+		meta: {
+			admin: true
+		}
+	},
+	{
 		path: '*',
 		name: '404',
 		component: () => import('../views/404.vue'),
@@ -100,6 +108,17 @@ router.beforeEach( async function(to, from, next) {
 		next();
 	}
 
+});
+
+router.beforeEach( async function(to, from, next) {
+	const admin = store.state.auth.user.admin;
+	if( to.meta.admin && !admin) {
+		next({
+			path: '/404'
+		});
+	} else {
+		next();
+	}
 });
 
 export default router;

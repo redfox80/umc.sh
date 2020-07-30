@@ -14,6 +14,7 @@
 			</b-navbar-nav>
 
 			<b-navbar-nav class="ml-auto mr-md-5">
+				<b-nav-item to="/admin" active-class="active" v-show="user.admin">Admin</b-nav-item>
 				<b-nav-item to="/login" active-class="active" exact v-show="!authStatus">Login</b-nav-item>
 				<b-nav-item to="/account" active-class="active" exact v-show="authStatus" v-b-tooltip title="Account">{{ user.username }}</b-nav-item>
 				<b-nav-item @click="logout" v-show="authStatus">logout</b-nav-item>
@@ -34,7 +35,7 @@ export default {
 		},
 		user() {
 			return this.$store.state.auth.user;
-		},
+		}
 	},
 	methods: {
 		logout() {
